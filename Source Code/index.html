@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Neon Blitz - Modern Interactive Canvas Game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app" role="main" aria-label="Neon Blitz Game Application">
+    <header id="game-header" aria-live="polite" aria-atomic="true">
+      <div class="header-item" aria-label="Score">
+        <span class="material-icons" aria-hidden="true">star</span>
+        Score: <span id="score-value" aria-live="polite" aria-atomic="true">0</span>
+      </div>
+      <div class="header-item" aria-label="Current Level">
+        <span class="material-icons" aria-hidden="true">layers</span>
+        Level: <span id="level-value">1</span>
+      </div>
+      <div class="header-item" aria-label="Player Lives">
+        <span class="material-icons" aria-hidden="true">favorite</span>
+        Lives: <span id="lives-value">3</span>
+      </div>
+      <div class="header-item" aria-label="Player Health">
+        <span class="material-icons" aria-hidden="true">healing</span> Health:
+        <div id="health-bar" aria-label="Health bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" tabindex="0">
+          <div id="health-fill" style="width: 100%;"></div>
+        </div>
+      </div>
+      <div class="header-item" aria-label="Elapsed Time">
+        <span class="material-icons" aria-hidden="true">timer</span>
+        Time: <span id="timer">00:00</span>
+      </div>
+    </header>
+
+    <main id="game-main" tabindex="0">
+      <canvas id="game-canvas" width="960" height="540" aria-label="Main game canvas"></canvas>
+      <canvas id="particles-canvas" width="960" height="540" aria-hidden="true"></canvas>
+    </main>
+
+    <aside id="game-sidebar" aria-label="Game information and controls" tabindex="0">
+      <section class="sidebar-section" id="controls-section">
+        <h3 tabindex="0" aria-expanded="true" aria-controls="controls-content">Controls 
+          <span class="material-icons" aria-hidden="true">expand_more</span>
+        </h3>
+        <div class="content" id="controls-content">
+          <ul>
+            <li><strong>Move:</strong> Arrow keys or W/A/S/D</li>
+            <li><strong>Shoot:</strong> Spacebar / Tap on shoot button</li>
+            <li><strong>Pause:</strong> P key / Pause button</li>
+            <li><strong>Fullscreen:</strong> F key / Fullscreen button</li>
+            <li><strong>Power-ups:</strong> Collect and activate automatically</li>
+          </ul>
+        </div>
+      </section>
+      <section class="sidebar-section" id="powerups-section">
+        <h3 tabindex="0" aria-expanded="true" aria-controls="powerups-content">Power-ups 
+          <span class="material-icons" aria-hidden="true">expand_more</span>
+        </h3>
+        <div class="content" id="powerups-content">
+          <div id="powerups-list">
+            <!-- dynamic powerup list -->
+          </div>
+        </div>
+      </section>
+      <section class="sidebar-section" id="achievements-section">
+        <h3 tabindex="0" aria-expanded="true" aria-controls="achievements-content">Achievements 
+          <span class="material-icons" aria-hidden="true">expand_more</span>
+        </h3>
+        <div class="content" id="achievements-content">
+          <div id="achievements-list">
+            <!-- dynamic achievements -->
+          </div>
+        </div>
+      </section>
+    </aside>
+
+    <footer id="game-bottom">
+      <button id="btn-shoot" class="btn" aria-label="Shoot">
+        <span class="material-icons">rocket_launch</span> Shoot
+      </button>
+      <button id="btn-pause" class="btn" aria-label="Pause Game">
+        <span class="material-icons">pause</span> Pause
+      </button>
+      <button id="btn-fullscreen" class="btn" aria-label="Toggle Fullscreen">
+        <span class="material-icons">fullscreen</span> Fullscreen
+      </button>
+      <button id="toggle-sidebar" class="btn" aria-label="Toggle Sidebar" title="Toggle Sidebar">
+        <span class="material-icons">menu</span>
+      </button>
+    </footer>
+
+    <!-- Achievement popup -->
+    <div id="achievement-popup" role="alert" aria-live="assertive" aria-atomic="true" aria-hidden="true">
+      <span class="material-icons">emoji_events</span>
+      <span id="achievement-message">Achievement unlocked!</span>
+    </div>
+
+    <!-- Pause overlay -->
+    <div id="pause-overlay" aria-live="polite" aria-atomic="true">
+      Game Paused
+    </div>
+
+    <!-- Modal Overlay for Settings / Game Over -->
+    <div id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+      <div class="modal" role="document">
+        <h2 id="modal-title">Settings</h2>
+        <form id="settings-form">
+          <label for="sound-volume">Sound Volume</label>
+          <input type="range" id="sound-volume" name="soundVolume" min="0" max="100" step="1" value="75" aria-valuemin="0" aria-valuemax="100" aria-label="Sound volume control"/>
+
+          <label for="music-volume">Music Volume</label>
+          <input type="range" id="music-volume" name="musicVolume" min="0" max="100" step="1" value="50" aria-label="Music volume control"/>
+
+          <label for="graphics-select">Graphics Quality</label>
+          <select id="graphics-select" name="graphics">
+            <option value="low">Low (Fewer effects)</option>
+            <option value="medium" selected>Medium (Default)</option>
+            <option value="high">High (All effects)</option>
+          </select>
+
+          <label for="control-style">Control Style</label>
+          <select id="control-style" name="controls">
+            <option value="keyboard">Keyboard & Mouse</option>
+            <option value="touch">Touch</option>
+            <option value="gamepad">Gamepad (Simulated)</option>
+          </select>
+
+          <button type="button" id="btn-close-settings" class="btn" aria-label="Close Settings">Close</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
